@@ -18,7 +18,7 @@ const { campgroundSchema, reviewSchema } = require('./schemas')
 const ExpressError = require('./views/utils/ExpressError');
 const { readdirSync } = require('fs');
 
-const a = "";
+
 const userRoutes = require('./routes/users')
 const campgroundRoutes = require('./routes/campgrounds')
 const reviewRoutes = require('./routes/reviews')
