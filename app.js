@@ -18,7 +18,7 @@ const { campgroundSchema, reviewSchema } = require('./schemas')
 const ExpressError = require('./views/utils/ExpressError');
 const { readdirSync } = require('fs');
 
-const a = "";
+
 const userRoutes = require('./routes/users')
 const campgroundRoutes = require('./routes/campgrounds')
 const reviewRoutes = require('./routes/reviews')
@@ -71,7 +71,7 @@ passport.deserializeUser(User.deserializeUser())
 
 
 app.use((req, res, next) => {
-    console.log(req.session)
+    /* console.log(req.session) */
     res.locals.currentUser = req.user;
     res.locals.success = req.flash('success')
     res.locals.error = req.flash('error')
