@@ -70,8 +70,11 @@ const sessionConfig = {
 }
 app.use(session(sessionConfig))
 app.use(flash())
-/* app.use(helmet({ contentSecurityPolicy: false }));
- */app.use(passport.initialize())
+app.use(helmet({
+    contentSecurityPolicy: false,
+    crossOriginEmbedderPolicy: false, // I had to add this compared to Colt's code in order to work it
+}));
+app.use(passport.initialize())
 app.use(passport.session())
 passport.use(new LocalStrategy(User.authenticate()))
 passport.serializeUser(User.serializeUser())
