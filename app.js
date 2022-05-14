@@ -2,6 +2,7 @@ if (process.env.NODE_ENV !== "production") {
     require('dotenv').config();
 }
 
+
 const express = require('express');
 const app = express();
 const path = require('path')
@@ -25,6 +26,8 @@ const reviewRoutes = require('./routes/reviews')
 const passport = require('passport')
 const LocalStrategy = require('passport-local')
 const User = require('./models/user')
+/* const helmet = require('helmet') */
+const mongoSanitize = require('express-mongo-sanitize')
 
 
 mongoose.connect('mongodb://localhost:27017/yelp-camp', {
@@ -48,21 +51,31 @@ app.set('views', path.join(__dirname, 'views'))
 app.use(express.urlencoded({ extended: true })) //I had to tell express to parse the body so I can use "body.params" below
 app.use(methodOverride('_method'))
 app.use(express.static(path.join(__dirname, 'public')))
+app.use(mongoSanitize({
+    replaceWith: '_'
+}))
 
 
 const sessionConfig = {
+    /*    name: 'session', */
     secret: 'thisshouldbethebettersecret',
     resave: false,
     saveUninitalized: true,
     cookie: {
         httpOnly: true,
+        /* secure: true,*/
         expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
         maxAge: 1000 * 60 * 60 * 24 * 7,
     }
 }
 app.use(session(sessionConfig))
 app.use(flash())
-
+/* app.use(
+    helmet({
+        contentSecurityPolicy: false,
+        referrerPolicy: { policy: "no-referrer" },
+    })
+); */
 app.use(passport.initialize())
 app.use(passport.session())
 passport.use(new LocalStrategy(User.authenticate()))
@@ -71,7 +84,7 @@ passport.deserializeUser(User.deserializeUser())
 
 
 app.use((req, res, next) => {
-    /* console.log(req.session) */
+    console.log(req.query)
     res.locals.currentUser = req.user;
     res.locals.success = req.flash('success')
     res.locals.error = req.flash('error')

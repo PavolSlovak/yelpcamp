@@ -1,7 +1,7 @@
 <% layout('layout/boilerplate') %>
     <div class="row">
         <h1 class="text-center">Edit <%= campground.title %> Campground</h1>
-        <div class="col-6 offset-3">
+        <div class="col-md-6 offset-md-3">
             <form action="/campgrounds/<%= campground._id %>?_method=PUT" method="POST" novalidate
                 class="validated-form" enctype="multipart/form-data">
                 <div class="mb-3">
@@ -20,13 +20,6 @@
                         Looks good
                     </div>
                 </div>
-
-
-
-
-
-
-
                 <div class="mb-3">
                     <label class="form-label" for="price">Campground Price</label>
                     <div class="input-group mb-3">
@@ -37,7 +30,6 @@
                         <div class="valid-feedback">
                             Looks good
                         </div>
-
                     </div>
 
                 </div>
